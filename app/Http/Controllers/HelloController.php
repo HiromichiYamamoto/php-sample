@@ -22,20 +22,21 @@ function tag($tag, $txt) {
 
 class HelloController extends Controller
 {
-  public function index($id='zero') {
-    $data = [
-      'msg'=>'これはコントローラから渡されたもの',
-      'id'=>$id
-    ];
-    return view('index',  $data);
+  public function index() {
+    return view('helloi.index', ['msg'=>'']);
   }
 
-  public function other() {
-    global $head, $style, $body, $end;
-
-    $html = $head . tag('title','Hello/other') . $style . $body
-                  . tag('h1', 'Other') . tag('p','this is Other page')
-                  . $end;
-                return $html;
+  public function post(Request $request)
+  {
+    return view('hello.index', ['msg'=>$request->msg]);
   }
+
+  // public function other() {
+  //   global $head, $style, $body, $end;
+
+  //   $html = $head . tag('title','Hello/other') . $style . $body
+  //                 . tag('h1', 'Other') . tag('p','this is Other page')
+  //                 . $end;
+  //               return $html;
+  // }
 }
