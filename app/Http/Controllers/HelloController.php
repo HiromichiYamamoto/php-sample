@@ -22,14 +22,12 @@ function tag($tag, $txt) {
 
 class HelloController extends Controller
 {
-  public function index() {
-    global $head, $style, $body, $end;
-
-    $html = $head . tag('title','Hello/Index') . $style . $body
-                  . tag('h1','Index') . tag('p', 'this is Index page')
-                  . '<a href="/hello/other page</a>'
-                  . $end;
-              return $html;
+  public function index($id='zero') {
+    $data = [
+      'msg'=>'これはコントローラから渡されたもの',
+      'id'=>$id
+    ];
+    return view('index',  $data);
   }
 
   public function other() {
