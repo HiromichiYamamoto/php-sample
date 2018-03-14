@@ -23,7 +23,8 @@ function tag($tag, $txt) {
 class HelloController extends Controller
 {
   public function index() {
-    return view('helloi.index', ['msg'=>'']);
+    $data = ['one', 'two', 'three', 'four', 'five'];
+    return view('hello.index', ['data'=>$data]);
   }
 
   public function post(Request $request)

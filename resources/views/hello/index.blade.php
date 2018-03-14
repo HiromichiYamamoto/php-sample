@@ -9,14 +9,15 @@
 </head>
 <body>
   <h1>Blade/Index</h1>
-  @if ($msg != '')
-  <p>こんにちわ{{$msg}}さん.</p>
-  @else
-  <p>何かかいてください</p>
-  @endif
-  <form method="POST" action="/hello">
-    {{ csrf_field() }}
-    <input type="text" name="msg">
-    <input type="submit">
+  <p>&#064;foreachディレクティブの例</p>
+  @foreach ($data as $item)
+    @if ($loop->first)
+      <p>データ一覧</p><ul>
+    @endif
+    <li>No,{{$loop->iteration}}. {{$item}}</li>
+    @if ($loop->last)
+      </ul><p>--ここまで</p>
+    @endif
+  @endforeach
 </body>
 </html>
