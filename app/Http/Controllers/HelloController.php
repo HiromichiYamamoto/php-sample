@@ -1,8 +1,20 @@
 <?php
 
 namespace App\Http\Controllers;
-
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Input;
+
+use App\Http\Requests\HelloRequest;
+
+use Illuminate\Support\Facades\DB;
+
+use Validator;
+
+use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Auth;
+
+use App\Person;
 
 global $head, $style, $body, $end;
 $head = '<html><head>';
@@ -22,14 +34,26 @@ function tag($tag, $txt) {
 
 class HelloController extends Controller
 {
-  public function index() {
-    $data = ['one', 'two', 'three', 'four', 'five'];
-    return view('hello.index', ['data'=>$data]);
+  public function index(Request $request) {
+
+    if ($request->hasCookie('msg')) {
+      $msg = 'Cookie: ' . $request->cookie('msg');
+    } else {
+      $msg = 'no';
+    }
+    return view('hello.index', ['msg'=>$msg]);
   }
 
   public function post(Request $request)
   {
-    return view('hello.index', ['msg'=>$request->msg]);
+    $validate_rule = [
+      'msg' => 'required',
+    ];
+    $this->validate($request, $validate_rule);
+    $msg = $request->msg;
+    $response = new Response(view('hello.index', ['msg'=>'{' . $msg . '}をクッキーに保存しました。']));
+    $response->cookie('msg', $msg, 100);
+    return $response;
   }
 
   // public function other() {
